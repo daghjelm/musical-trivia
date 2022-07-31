@@ -1,5 +1,4 @@
 import GameView from "../views/GameView";
-import { correctPosition } from "@/utils";
 
 import { mapState } from "vuex";
 import { mapActions } from "vuex";
