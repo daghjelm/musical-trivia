@@ -1,24 +1,17 @@
 import ScoreboardView from "../views/ScoreboardView";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 const gameOverPresenter = {
   data() {
-    return {
-    }
+    return {};
   },
   computed: {
-    ...mapState([
-      "scoreboard",
-      "oldScore"
-    ])
+    ...mapState(["scoreboard", "oldScore"]),
   },
   render() {
     return (
       <div>
-        <ScoreboardView 
-          scoreboard={this.scoreboard} 
-          oldScore={this.oldScore}
-        />
+        <ScoreboardView scoreboard={this.scoreboard} oldScore={this.oldScore} />
       </div>
     );
   },
