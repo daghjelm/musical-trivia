@@ -29,32 +29,14 @@ const gamePresenter = {
       "getCurrentSong",
       "sortAndSetCards",
       "removeLife",
-      "addToScoreboard",
-      "incrementScore",
-      "newGame",
+      "onCardAdded",
     ]),
 
     //called when a card is placed on the timeline
     cardAdded(obj) {
       let addedCard = obj.added.element;
       let index = obj.added.newIndex;
-      //right guess
-      if (correctPosition(addedCard.date, index, this.cards)) {
-        this.sortAndSetCards();
-        this.incrementScore();
-        this.getCurrentSong();
-        //wrong guess
-      } else {
-        //remove life and sort cards after wrong guess, if not lives, end the game
-        this.removeLife();
-        if (this.lives === 0) {
-          this.newGame();
-          this.$router.push({ path: "/gameover" });
-        } else {
-          this.sortAndSetCards();
-          this.getCurrentSong();
-        }
-      }
+      this.onCardAdded(addedCard, index);
     },
   },
 

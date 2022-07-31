@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { getRandomSong } from "@/services/musicService";
-import { sortCards } from "../utils";
+import { sortCards, correctPosition } from "../utils";
 
 Vue.use(Vuex);
 
@@ -291,6 +291,40 @@ const store = new Vuex.Store({
         .catch((error) => {
           commit("setError", error);
         });
+    },
+
+    onCorrectPosition({ commit, state }) {
+      commit("setCards", sortCards(state.cards));
+      commit("incrementScore");
+      store.dispatch("getCurrentSong");
+    },
+
+    onWrongPosition({ commit, state }) {
+      commit("removeLife");
+      if (state.lives === 0) {
+        store.dispatch("newGame");
+        this.$router.push({ path: "/gameover" });
+      } else {
+        commit("setCards", sortCards(state.cards));
+        store.dispatch("getCurrentSong");
+      }
+    },
+
+    onCardAdded({ commit, state }, addedCard, index) {
+      if (correctPosition(addedCard.date, index, state.cards)) {
+        commit("setCards", sortCards(state.cards));
+        commit("incrementScore");
+        store.dispatch("getCurrentSong");
+      } else {
+        commit("removeLife");
+        if (state.lives === 0) {
+          store.dispatch("newGame");
+          this.$router.push({ path: "/gameover" });
+        } else {
+          commit("setCards", sortCards(state.cards));
+          store.dispatch("getCurrentSong");
+        }
+      }
     },
 
     //updates state.user with data garthered from the firebase authentication, called on login
