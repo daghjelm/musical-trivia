@@ -1,0 +1,15 @@
+{
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  "rules": {
+    "userData": {
+      "scoreboard": {
+        ".read": true,
+        ".write": "auth !== null"
+      },
+      "$uid":{
+        ".write": "$uid === auth.uid",
+        ".read": "$uid === auth.uid"
+      }
+    }
+  }
+}
