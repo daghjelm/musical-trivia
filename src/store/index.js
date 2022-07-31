@@ -293,23 +293,6 @@ const store = new Vuex.Store({
         });
     },
 
-    onCorrectPosition({ commit, state }) {
-      commit("setCards", sortCards(state.cards));
-      commit("incrementScore");
-      store.dispatch("getCurrentSong");
-    },
-
-    onWrongPosition({ commit, state }) {
-      commit("removeLife");
-      if (state.lives === 0) {
-        store.dispatch("newGame");
-        this.$router.push({ path: "/gameover" });
-      } else {
-        commit("setCards", sortCards(state.cards));
-        store.dispatch("getCurrentSong");
-      }
-    },
-
     onCardAdded({ commit, state }, addedCard, index) {
       if (correctPosition(addedCard.date, index, state.cards)) {
         commit("setCards", sortCards(state.cards));
